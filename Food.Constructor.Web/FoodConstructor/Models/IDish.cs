@@ -10,6 +10,6 @@ namespace FoodConstructor.Models
         Guid Id { get; }
         string Title { get; set; }
         string Description { get; set; }
-        IList<IComponent> Components { get; set; }
+        IList<Component> Components { get; set; }
     }
 }

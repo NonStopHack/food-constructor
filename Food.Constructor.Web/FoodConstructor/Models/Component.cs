@@ -1,9 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace FoodConstructor.Models
 {
+    public class ImageLoaderHelper
+    {
+        public static string UploadAndGetBase64(string productName)
+        {
+            var workDir = System.Web.HttpContext.Current.Server.MapPath("~");
+            workDir = Path.Combine(workDir, $"Images");
+            var fullPath = Path.Combine(workDir, $"{productName}.jpg");
+            using (Image image = Image.FromFile(fullPath))
+            {
+                using (MemoryStream m = new MemoryStream())
+                {
+                    image.Save(m, image.RawFormat);
+                    byte[] imageBytes = m.ToArray();
+
+                    // Convert byte[] to Base64 String
+                    string base64String = Convert.ToBase64String(imageBytes);
+                    return base64String;
+                }
+            }
+        }
+    }
+
     public class Component : IComponent
     {
         private static List<Component> testComponents;
@@ -18,8 +42,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Salt",
                     Quantity = 5,
-                    Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(73)
+                    Categories = new List<string>() { "test", "burger" },
+                    NutritionalValue = new NutritionalValue(73),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Salt")
                 },
                 new Component()
                 {
@@ -27,8 +52,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Sugar",
                     Quantity = 7,
-                    Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(68)
+                    Categories = new List<string>() { "test", "smoothies" },
+                    NutritionalValue = new NutritionalValue(68),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Sugar")
                 },
                 new Component()
                 {
@@ -37,7 +63,8 @@ namespace FoodConstructor.Models
                     Title = "Potatoes",
                     Quantity = 50,
                     Categories = new List<string>() { "vegetables" },
-                    NutritionalValue = new NutritionalValue(35)
+                    NutritionalValue = new NutritionalValue(35),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Potatoes")
                 },
                 new Component()
                 {
@@ -45,8 +72,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Cucumber",
                     Quantity = 12,
-                    Categories = new List<string>() { "vegetables" },
-                    NutritionalValue = new NutritionalValue(25)
+                    Categories = new List<string>() { "vegetables", "burger" },
+                    NutritionalValue = new NutritionalValue(25),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Cucumber")
                 },
                 new Component()
                 {
@@ -54,8 +82,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Tomatoes",
                     Quantity = 6,
-                    Categories = new List<string>() { "vegetables" },
-                    NutritionalValue = new NutritionalValue(38)
+                    Categories = new List<string>() { "vegetables", "burger" },
+                    NutritionalValue = new NutritionalValue(38),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Tomatoes")
                 },
                 new Component()
                 {
@@ -64,7 +93,8 @@ namespace FoodConstructor.Models
                     Title = "Pepper",
                     Quantity = 700,
                     Categories = new List<string>() { "vegetables" },
-                    NutritionalValue = new NutritionalValue(83)
+                    NutritionalValue = new NutritionalValue(83),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Pepper")
                 },
                 new Component()
                 {
@@ -72,17 +102,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Chiken",
                     Quantity = 15,
-                    Categories = new List<string>() { "meat" },
-                    NutritionalValue = new NutritionalValue(51)
-                },
-                new Component()
-                {
-                    Id = Guid.NewGuid(),
-                    Measurement = Measurement.kg,
-                    Title = "Chiken",
-                    Quantity = 15,
-                    Categories = new List<string>() { "meat" },
-                    NutritionalValue = new NutritionalValue(27)
+                    Categories = new List<string>() { "meat", "burger" },
+                    NutritionalValue = new NutritionalValue(51),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Chiken")
                 },
                 new Component()
                 {
@@ -90,8 +112,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.liters,
                     Title = "Water",
                     Quantity = 105,
-                    Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(98)
+                    Categories = new List<string>() { "test", "smoothies" },
+                    NutritionalValue = new NutritionalValue(98),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Water")
                 },
                 new Component()
                 {
@@ -99,8 +122,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Onien",
                     Quantity = 25,
-                    Categories = new List<string>() { "vegetables" },
-                    NutritionalValue = new NutritionalValue(34)
+                    Categories = new List<string>() { "vegetables", "burger" },
+                    NutritionalValue = new NutritionalValue(34),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Onien")
                 },
                 new Component()
                 {
@@ -109,7 +133,8 @@ namespace FoodConstructor.Models
                     Title = "Butter",
                     Quantity = 3,
                     Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(435)
+                    NutritionalValue = new NutritionalValue(435),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Butter")
                 },
                 new Component()
                 {
@@ -118,7 +143,8 @@ namespace FoodConstructor.Models
                     Title = "Oil",
                     Quantity = 3,
                     Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(664)
+                    NutritionalValue = new NutritionalValue(664),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Oil")
                 },
                 new Component()
                 {
@@ -126,8 +152,9 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.kg,
                     Title = "Eggs",
                     Quantity = 105,
-                    Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(34)
+                    Categories = new List<string>() { "burger" },
+                    NutritionalValue = new NutritionalValue(34),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Eggs")
                 },
                 new Component()
                 {
@@ -135,8 +162,29 @@ namespace FoodConstructor.Models
                     Measurement = Measurement.liters,
                     Title = "Milk",
                     Quantity = 5,
-                    Categories = new List<string>() { "test" },
-                    NutritionalValue = new NutritionalValue(12)
+                    Categories = new List<string>() { "test", "smoothies" },
+                    NutritionalValue = new NutritionalValue(12),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Milk")
+                },
+                new Component()
+                {
+                    Id = Guid.NewGuid(),
+                    Measurement = Measurement.liters,
+                    Title = "Ham",
+                    Quantity = 5,
+                    Categories = new List<string>() { "burger" },
+                    NutritionalValue = new NutritionalValue(12),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Ham")
+                },
+                new Component()
+                {
+                    Id = Guid.NewGuid(),
+                    Measurement = Measurement.liters,
+                    Title = "Apple",
+                    Quantity = 5,
+                    Categories = new List<string>() { "smoothies" },
+                    NutritionalValue = new NutritionalValue(12),
+                    ImageBase64 = ImageLoaderHelper.UploadAndGetBase64("Apple")
                 }
             };
             #endregion

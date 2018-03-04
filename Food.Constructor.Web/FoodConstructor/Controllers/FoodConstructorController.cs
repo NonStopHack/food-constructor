@@ -2,22 +2,17 @@
 using FoodConstructor.Models.Repository;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
-using System.Web.Script.Services;
 
 namespace FoodConstructor.Controllers
 {
     public class FoodConstructorController : ApiController
     {
-
         // OPTION http-verb handler
         public string OptionsFoodConstructor()
         {
@@ -28,7 +23,35 @@ namespace FoodConstructor.Controllers
         [Route(@"api/test")]
         public JsonStringResult Test()
         {
-            return new JsonStringResult("Test OK");
+            try
+            {
+                return new JsonStringResult("Test OK");
+            }
+            catch(Exception ex)
+            {
+                Log.Error($"Test method exception: {ex.Message}");
+                return new JsonStringResult($"Exception occured during test method calling: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route(@"api/ClearDB")]
+        public JsonStringResult ClearDB()
+        {
+            try
+            {
+                Log.Warning($"DB clearing invoking");
+                Repository rep = new Repository();
+                rep.DeleteAllCompanies();
+                rep.DeleteAllIssuePoints();
+                rep.DeleteAllOrders();
+                return new JsonStringResult("DB cleared");
+            }
+            catch(Exception ex)
+            {
+                Log.Error($"DB clearing method exception: {ex.Message}");
+                return new JsonStringResult($"Exception occured during DB clearing: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -56,7 +79,8 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonStringResult(); 
+                Log.Error($"Exception occured during all elements call: {ex.Message}");
+                return new JsonStringResult($"Exception occured during all elements call: {ex.Message}"); 
             }
         }
 
@@ -78,11 +102,13 @@ namespace FoodConstructor.Controllers
                     }
                 }
 
+                Debug.WriteLine($"Company with ID: {companyId} not found");
                 return new JsonStringResult();
             }
             catch (Exception ex)
             {
-                return new JsonStringResult();
+                Log.Error($"Exception occured during available components request: {ex.Message}");
+                return new JsonStringResult($"Exception occured during available components request: {ex.Message}");
             }
         }
 
@@ -104,7 +130,8 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonStringResult();
+                Log.Error($"Exception occured during company issue points requesting: {ex.Message}");
+                return new JsonStringResult($"Exception occured during company issue points requesting: {ex.Message}");
             }
         }
 
@@ -119,7 +146,41 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
+                return new JsonStringResult($"Exception occured during companies request: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route(@"api/Orders")]
+        public JsonStringResult Orders()
+        {
+            try
+            {
+                Repository rep = new Repository();
+                var orders = rep.GetOrders();
+                var jsonOrders = JsonConvert.SerializeObject(orders);
+                return new JsonStringResult(jsonOrders);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
                 return new JsonStringResult();
+            }
+        }
+
+        [HttpPost]
+        [Route(@"api/CreateOrUpdateOrder")]
+        public void CreateOrUpdateOrder(Order order)
+        {
+            try
+            {
+                Repository rep = new Repository();
+                rep.CreateOrUpdateOrder(order);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
             }
         }
     }
