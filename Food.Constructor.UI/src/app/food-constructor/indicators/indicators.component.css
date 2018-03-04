@@ -1,0 +1,9 @@
+
+.mfont {
+    font-family: 'Amatic SC', bold;
+    font-size: 27px;
+}
+
+.mfont.head {
+    font-size: 30px;
+}
