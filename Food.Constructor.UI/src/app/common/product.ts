@@ -6,4 +6,5 @@ export interface Product {
     Quantity: number;
     Title: string;
     NutritionalValue: NutritionalValue;
+    ImageBase64: string;
 }

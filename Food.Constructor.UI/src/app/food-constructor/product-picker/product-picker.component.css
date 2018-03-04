@@ -118,3 +118,8 @@ input[type="radio"]:disabled + .label-text:before{
 	75%{transform: scale(1.4);}
 	100%{transform: scale(1);}
 }
+
+.mfont {
+    font-family: 'Amatic SC', bold;
+    font-size: 25px;
+}
