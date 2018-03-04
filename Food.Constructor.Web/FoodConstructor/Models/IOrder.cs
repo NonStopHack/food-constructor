@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace FoodConstructor.Models
@@ -14,6 +15,7 @@ namespace FoodConstructor.Models
 
     public interface IOrder
     {
+        [BsonId]
         Guid Id { get; }
         Guid CompanyId { get; set; }
         Guid IssuePointId { get; set; }

@@ -1,14 +1,32 @@
 <div class="container">
-  <div class="row">
-    <div class="form-check center">
-      <app-product-picker [product]="product" *ngFor="let product of products">
-      </app-product-picker>
+  <div class="row center">
+    <div class="col-md-2">
+        <img width="100" alt="Logo" src="{{logoImg}}">
+      <h2>Dishes</h2>
+      <div class="list-group" *ngFor="let dish of dishCategories">
+        <a id="list-group-item-{{dish}}" style="cursor: pointer" (click)="selectCategory(dish)" class="list-group-item">{{dish}}</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div *ngFor="let part of dishParts">
+          <img width="150" height="50" alt="Logo" src="{{logoImg}}">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <app-indicators
+        [indicators]="indicators">
+      </app-indicators>
     </div>
   </div>
-
-  <div class="row">
-      <app-indicators>
-        
-      </app-indicators>
+  <div class="row center">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+      <app-product-picker [product]="product" *ngFor="let product of products" (selectedProduct)="newProductSelect($event)">
+      </app-product-picker>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-primary btn-size">Add To Cart</button>
+      <button type="button" class="btn btn-success btn-size">Make Order</button>
+    </div>
   </div>
 </div>

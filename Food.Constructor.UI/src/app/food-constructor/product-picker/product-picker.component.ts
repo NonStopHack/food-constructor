@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Product } from '../../common/product';
 
 @Component({
   selector: 'app-product-picker',
@@ -7,20 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductPickerComponent implements OnInit {
   @Input() product;
+  @Output() selectedProduct: EventEmitter<any> = new EventEmitter();
   filter = false;
   constructor() { }
 
   ngOnInit() {
   }
 
-  filterData(data) {
+  filterData(product: Product) {
     this.filter = !this.filter;
-    console.log(data);
-  }
-
-  onCheck(event, data) {
-    console.log(event);
-    console.log(data);
+    this.selectedProduct.emit({product: product, isSelect: this.filter});
   }
 
 }

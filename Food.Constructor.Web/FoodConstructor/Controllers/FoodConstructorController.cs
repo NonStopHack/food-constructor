@@ -1,9 +1,13 @@
 ﻿using FoodConstructor.Models;
+using FoodConstructor.Models.Repository;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -24,20 +28,29 @@ namespace FoodConstructor.Controllers
         [Route(@"api/test")]
         public JsonStringResult Test()
         {
-            return new JsonStringResult("Test method successfully invoked");
+            return new JsonStringResult("Test OK");
         }
 
         [HttpGet]
-
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         [Route(@"api/AllComponents")]
-        public JsonStringResult AllComponents()
+        public JsonStringResult AllComponents(string category = null) 
         {
             try
             {
                 var company = MockDataConfig.Companies.FirstOrDefault();
                 var issuePoint = MockDataConfig.IssuePoints.FirstOrDefault(ip => company.IssuePointsIds.Contains(ip.Id));
-                var components = issuePoint.AvailableComponents as IList<IComponent>;
+
+                IList<IComponent> components = new List<IComponent>();
+                if (!string.IsNullOrEmpty(category))
+                {
+                    Repository rep = new Repository();
+                    components = rep.GetAvailableComponents(issuePoint.Id, new List<string> { category });
+                }
+                else
+                {
+                    components = issuePoint.AvailableComponents;
+                }
+
                 string result = JsonConvert.SerializeObject(components);
                 return new JsonStringResult(result);
             }
@@ -75,35 +88,38 @@ namespace FoodConstructor.Controllers
 
         [HttpGet]
         [Route(@"api/IssuePoints")]
-        public string IssuePoints(Guid companyId)
+        public JsonStringResult IssuePoints(Guid companyId)
         {
             try
             {
                 var company = MockDataConfig.Companies.FirstOrDefault(c => c.Id == companyId);
                 if(company != null)
                 {
-                    return JsonConvert.SerializeObject(company.IssuePointsIds as List<Guid>);
+                    var companyIssuePoints = company.IssuePointsIds as List<Guid>;
+                    var json = JsonConvert.SerializeObject(companyIssuePoints);
+                    return new JsonStringResult(json);
                 }
 
-                return string.Empty;
+                return new JsonStringResult();
             }
             catch (Exception ex)
             {
-                return string.Empty;
+                return new JsonStringResult();
             }
         }
 
         [HttpGet]
         [Route(@"api/Companies")]
-        public string Companies()
+        public JsonStringResult Companies()
         {
             try
             {
-               return JsonConvert.SerializeObject(MockDataConfig.Companies);
+                var jsonCompanies = JsonConvert.SerializeObject(MockDataConfig.Companies);
+                return new JsonStringResult(jsonCompanies);
             }
             catch (Exception ex)
             {
-                return string.Empty;
+                return new JsonStringResult();
             }
         }
     }

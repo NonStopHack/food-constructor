@@ -8,12 +8,13 @@ namespace FoodConstructor.Models.Repository
 {
     interface IRepository
     {
-        Guid CreateOrUpdateCompany(ICompany company);
+        Guid CreateOrUpdateCompany(Company company);
         void DeleteCompany(Guid companyId);
-        IList<ICompany> GetCompanies(IList<Guid> companiesIds);
-        IList<IIssuePoint> GetCompanyIssuePoint(IList<Guid> companiesIds);
-        IList<IComponent> GetAvailableComponents(Guid companyId, Guid issuePointId);
-        Guid CreateOrUpdateComponent(Guid companyId, Guid issuePointId, IComponent component);
-        Guid CreateOrUpdateOrder(Guid companyId, Guid issuePointId, IOrder order);
+        IList<Company> GetCompanies(IList<Guid> companiesIds = null);
+        IList<IssuePoint> GetCompanyIssuePoint(IList<Guid> companiesIds);
+        IList<IComponent> GetAvailableComponents(Guid issuePointId, IList<string> categories);
+        Guid CreateOrUpdateComponent(Guid issuePointId, Component component);
+        Guid CreateOrUpdateOrder(Order order);
+        Guid CreateOrUpdateIssuePoint(IssuePoint issuePointId);
     }
 }

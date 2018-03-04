@@ -1,0 +1,33 @@
+﻿@model IEnumerable<FoodConstructor.Models.ICompany>
+
+@{
+    ViewBag.Title = "Companies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Companies</h2>
+
+<p>
+    @Html.ActionLink(linkText: "Create New", actionName: "EditCompany")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditCompany", new { companyId = item.Id }) |
+            @Html.ActionLink("Delete", "DeleteCompany", new { companyId = item.Id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FoodConstructor.Models
 {
     public class Dish : IDish
     {
+        Dish(string title)
+        {
+            _title = title;
+            _id = Guid.NewGuid();
+        }
+
         private IList<IComponent> _components;
         public IList<IComponent> Components
         {
@@ -43,6 +50,15 @@ namespace FoodConstructor.Models
             set
             {
                 _title = value;
+            }
+        }
+
+        private Guid _id;
+        public Guid Id
+        {
+            get
+            {
+                return _id;
             }
         }
     }

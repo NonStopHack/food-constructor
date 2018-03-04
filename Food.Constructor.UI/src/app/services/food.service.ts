@@ -15,4 +15,8 @@ export class FoodService {
   getProducts(): Observable<any> {
     return this.http.get<any>(Constants.getProducts, httpOptions);
   }
+
+  getProductsByCategory(category: string): Observable<any> {
+    return this.http.get<any>(Constants.getProducts + '?category=' + category, httpOptions);
+  }
 }

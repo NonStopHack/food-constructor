@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NutritionalValue } from '../../common/nutritional-value';
 
 @Component({
   selector: 'app-indicators',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndicatorsComponent implements OnInit {
 
+  @Input() indicators: NutritionalValue;
   constructor() { }
 
   ngOnInit() {
