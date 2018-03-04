@@ -7,8 +7,7 @@ export interface Order {
     CompanyId: string;
     CustomerId: string;
     Dishes: Array<any> | null;
-    GetLastState: KeyValue;
-    History: Array<KeyValue>;
+    History: KeyValue[];
     Id: string;
     IssuePointId: string;
     State: number;

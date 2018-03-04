@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Constants } from '../common/constants';
 import { Observable } from 'rxjs/Observable';
-import { ServerResponse } from '../common/ServerResponse';
+import { ServerResponse } from '../common/server-response';
 import { Order } from '../common/Order';
 
 const httpOptions = {
@@ -23,6 +23,6 @@ export class FoodService {
   }
 
   createOrUpdateOrder(order: Order) {
-    return this.http.post(Constants.createOrUpdateOrder, order, httpOptions);
+    return this.http.post(Constants.createOrUpdateOrder, JSON.stringify(order), httpOptions);
   }
 }

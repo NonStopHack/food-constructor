@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FoodService } from '../services/food.service';
-import { ServerResponse } from '../common/ServerResponse';
+import { ServerResponse } from '../common/server-response';
 import { Product } from '../common/product';
 import { NutritionalValue } from '../common/nutritional-value';
 import { Constants } from '../common/constants';
 import { Subscription } from 'rxjs/Subscription';
 import { Order } from '../common/Order';
+import { Dish } from '../common/Dish';
 
 @Component({
   selector: 'app-food-constructor',
@@ -21,6 +22,7 @@ export class FoodConstructorComponent implements OnInit, OnDestroy {
   products: Product[];
   indicators: NutritionalValue;
   dishParts: Product[] = [];
+  dishes: Dish[] = [];
   dishCategories: string[] = [];
   constructor(private foodService: FoodService) { }
 
@@ -77,15 +79,23 @@ export class FoodConstructorComponent implements OnInit, OnDestroy {
   }
 
   makeOrder() {
+    const dishes2: Dish[] = [{
+      Description: 'Description',
+      Id: '00000000-0000-0000-0000-000000000000',
+      State: 1,
+      // History: null,
+      Title: 'Dish title',
+      Components: this.dishParts
+    }];
+
     const order: Order = {
-     CompanyId: null,
-     History: null,
+     CompanyId: '00000000-0000-0000-0000-000000000000',
+     History: [{Key: 0, Value: ''}],
      State: 0,
-     Id: null,
-     CustomerId: null,
-     GetLastState: {Key: 0, Value: ''},
-     IssuePointId: null,
-     Dishes: this.dishParts
+     Id: '00000000-0000-0000-0000-000000000000',
+     CustomerId: '00000000-0000-0000-0000-000000000000',
+     IssuePointId: '00000000-0000-0000-0000-000000000000',
+     Dishes: dishes2
     };
 
     this.foodService.createOrUpdateOrder(order);
