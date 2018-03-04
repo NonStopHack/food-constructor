@@ -126,7 +126,7 @@ namespace FoodConstructor.Models.Repository
                     bool isCategoryApplicable = false;
                     foreach (var componentCategory in component.Categories)
                     {
-                        if (categories.Contains(componentCategory))
+                        if (categories.Contains(componentCategory, StringComparer.OrdinalIgnoreCase))
                         {
                             isCategoryApplicable = true;
                             break;
