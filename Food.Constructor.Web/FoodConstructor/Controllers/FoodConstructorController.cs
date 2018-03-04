@@ -150,5 +150,38 @@ namespace FoodConstructor.Controllers
                 return new JsonStringResult($"Exception occured during companies request: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        [Route(@"api/Orders")]
+        public JsonStringResult Orders()
+        {
+            try
+            {
+                Repository rep = new Repository();
+                var orders = rep.GetOrders();
+                var jsonOrders = JsonConvert.SerializeObject(orders);
+                return new JsonStringResult(jsonOrders);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
+                return new JsonStringResult();
+            }
+        }
+
+        [HttpPost]
+        [Route(@"api/CreateOrUpdateOrder")]
+        public void CreateOrUpdateOrder(Order order)
+        {
+            try
+            {
+                Repository rep = new Repository();
+                rep.CreateOrUpdateOrder(order);
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
+            }
+        }
     }
 }

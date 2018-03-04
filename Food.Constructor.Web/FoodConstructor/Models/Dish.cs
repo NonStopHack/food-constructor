@@ -5,14 +5,22 @@ namespace FoodConstructor.Models
 {
     public class Dish : IDish
     {
+        Dish()
+        {
+            _title = "Default title";
+            _description = "Default description";
+            _components = new List<Component>();
+            _id = Guid.NewGuid();
+        }
+
         Dish(string title)
         {
             _title = title;
             _id = Guid.NewGuid();
         }
 
-        private IList<IComponent> _components;
-        public IList<IComponent> Components
+        private IList<Component> _components;
+        public IList<Component> Components
         {
             get
             {

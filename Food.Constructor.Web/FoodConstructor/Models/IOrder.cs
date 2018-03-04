@@ -21,6 +21,7 @@ namespace FoodConstructor.Models
         Guid IssuePointId { get; set; }
         Guid CustomerId { get; set; }
         OrderState State { get; set; }
+        IList<Dish> Dishes { get; set; }
         IList<KeyValuePair<OrderState, DateTime>> History { get; }
         KeyValuePair<OrderState, DateTime> GetLastState { get; }
     }
