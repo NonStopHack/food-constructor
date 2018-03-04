@@ -2,6 +2,7 @@
 using FoodConstructor.Models.Repository;
 using MongoDB.Driver;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,6 +29,7 @@ namespace FoodConstructor.Controllers
             }
             catch(Exception ex)
             {
+                Log.Error($"Test method exception: {ex.Message}");
                 return new JsonStringResult($"Exception occured during test method calling: {ex.Message}");
             }
         }
@@ -38,6 +40,7 @@ namespace FoodConstructor.Controllers
         {
             try
             {
+                Log.Warning($"DB clearing invoking");
                 Repository rep = new Repository();
                 rep.DeleteAllCompanies();
                 rep.DeleteAllIssuePoints();
@@ -46,6 +49,7 @@ namespace FoodConstructor.Controllers
             }
             catch(Exception ex)
             {
+                Log.Error($"DB clearing method exception: {ex.Message}");
                 return new JsonStringResult($"Exception occured during DB clearing: {ex.Message}");
             }
         }
@@ -75,6 +79,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error($"Exception occured during all elements call: {ex.Message}");
                 return new JsonStringResult($"Exception occured during all elements call: {ex.Message}"); 
             }
         }
@@ -102,6 +107,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error($"Exception occured during available components request: {ex.Message}");
                 return new JsonStringResult($"Exception occured during available components request: {ex.Message}");
             }
         }
@@ -124,6 +130,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error($"Exception occured during company issue points requesting: {ex.Message}");
                 return new JsonStringResult($"Exception occured during company issue points requesting: {ex.Message}");
             }
         }
@@ -139,6 +146,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error($"Exception occured during companies request:  {ex.Message}");
                 return new JsonStringResult($"Exception occured during companies request: {ex.Message}");
             }
         }
