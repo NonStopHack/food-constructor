@@ -242,6 +242,7 @@
     <Content Include="Views\Home\EditIssuePoint.cshtml" />
     <Content Include="Views\Home\Orders.cshtml" />
     <Content Include="Views\Home\EditOrder.cshtml" />
+    <Content Include="Views\Home\_PartialDish.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

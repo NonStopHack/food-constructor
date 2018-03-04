@@ -197,6 +197,11 @@ namespace FoodConstructor.Models.Repository
                 foundOrders = orders.Find(x => true).ToList();
             }
 
+            foreach(var order in foundOrders)
+            {
+                order.Dishes.Add(new Dish("Test dish"));
+            }
+
             return foundOrders;
         }
         public Guid CreateOrUpdateOrder(Order order)

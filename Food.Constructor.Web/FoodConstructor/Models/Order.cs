@@ -30,6 +30,10 @@ namespace FoodConstructor.Models
             {
                 return _id;
             }
+            set
+            {
+                _id = value;
+            }
         }
 
         private Guid _companyId;

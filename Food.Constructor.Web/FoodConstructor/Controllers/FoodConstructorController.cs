@@ -171,12 +171,13 @@ namespace FoodConstructor.Controllers
 
         [HttpPost]
         [Route(@"api/CreateOrUpdateOrder")]
-        public void CreateOrUpdateOrder(Order order)
+        public void CreateOrUpdateOrder(string order)
         {
             try
             {
+                var ordertmp = JsonConvert.DeserializeObject<Order>(order);
                 Repository rep = new Repository();
-                rep.CreateOrUpdateOrder(order);
+                rep.CreateOrUpdateOrder(ordertmp);
             }
             catch (Exception ex)
             {

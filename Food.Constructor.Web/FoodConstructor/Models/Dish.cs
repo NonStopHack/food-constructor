@@ -5,7 +5,7 @@ namespace FoodConstructor.Models
 {
     public class Dish : IDish
     {
-        Dish()
+        public Dish()
         {
             _title = "Default title";
             _description = "Default description";
@@ -13,7 +13,7 @@ namespace FoodConstructor.Models
             _id = Guid.NewGuid();
         }
 
-        Dish(string title)
+        public Dish(string title)
         {
             _title = title;
             _id = Guid.NewGuid();

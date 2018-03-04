@@ -146,7 +146,7 @@ namespace FoodConstructor.Controllers
         [HttpGet]
         public ActionResult EditOrder(Guid? orderId)
         {
-            IOrder Order;
+            Order Order;
             if (orderId.HasValue)
             {
                 Repository rep = new Repository();

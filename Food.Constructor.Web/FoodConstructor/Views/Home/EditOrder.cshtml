@@ -11,7 +11,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Order</h4>
         <hr />
@@ -41,6 +41,24 @@
                 @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
             </div>
         </div>
+        @if (Model != null && Model.Dishes != null)
+        {
+            <h4>Dishes:</h4>
+                    foreach (var dish in Model.Dishes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => dish.Title)<br />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => dish.Id)<br />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => dish.Description)<br />
+                            </td>
+                        </tr>
+                    }
+        }
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
