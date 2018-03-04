@@ -5,6 +5,13 @@ namespace FoodConstructor.Models
 {
     public class Order : IOrder
     {
+        public Order()
+        {
+            _id = Guid.NewGuid();
+            _history = new List<KeyValuePair<OrderState, DateTime>>();
+            _history.Add(new KeyValuePair<OrderState, DateTime>(OrderState.Waiting, DateTime.Now));
+        }
+
         public Order(Guid companyId, Guid issuePointId, Guid customerId, Guid contractorId, IList<IDish> dishes)
         {
             _id = Guid.NewGuid();
@@ -107,9 +114,9 @@ namespace FoodConstructor.Models
             get
             {
                 KeyValuePair<OrderState, DateTime> lastState = new KeyValuePair<OrderState, DateTime>(OrderState.None, DateTime.MinValue);
-                if (_history != null)
+                if (_history != null && _history.Count > 0)
                 {
-                    lastState = _history[_history.Count];
+                    lastState = _history[_history.Count - 1];
                 }
                 return lastState;
             }

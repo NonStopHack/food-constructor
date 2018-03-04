@@ -239,6 +239,8 @@
     <Content Include="Views\Home\EditCompany.cshtml" />
     <Content Include="Views\Home\IssuePoints.cshtml" />
     <Content Include="Views\Home\EditIssuePoint.cshtml" />
+    <Content Include="Views\Home\Orders.cshtml" />
+    <Content Include="Views\Home\EditOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,7 +3,6 @@ using FoodConstructor.Models.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace FoodConstructor.Controllers
@@ -29,6 +28,9 @@ namespace FoodConstructor.Controllers
             return View();
         }
 
+
+        // companies
+        [HttpGet]
         public ActionResult Companies()
         {
             Repository rep = new Repository();
@@ -79,6 +81,9 @@ namespace FoodConstructor.Controllers
             return View(company);
         }
 
+
+        // issue points
+        [HttpGet]
         public ActionResult IssuePoints()
         {
             Repository rep = new Repository();
@@ -115,6 +120,70 @@ namespace FoodConstructor.Controllers
             }
 
             return View(issuePoint);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteIssuePoint(Guid? issuePointId)
+        {
+            if (issuePointId.HasValue)
+            {
+                Repository rep = new Repository();
+                rep.DeleteIssuePoint(issuePointId.Value);
+            }
+
+            return Redirect("/Home/IssuePoints");
+        }
+
+        // orders
+        [HttpGet]
+        public ActionResult Orders()
+        {
+            Repository rep = new Repository();
+            var orders = rep.GetOrders() ?? new List<Order>();
+            return View(orders);
+        }
+
+        [HttpGet]
+        public ActionResult EditOrder(Guid? orderId)
+        {
+            IOrder Order;
+            if (orderId.HasValue)
+            {
+                Repository rep = new Repository();
+                Order = rep.GetOrders(new List<Guid> { orderId.Value }).FirstOrDefault();
+            }
+            else
+            {
+                Order = new Order();
+            }
+
+            return View(Order);
+        }
+
+        [HttpPost]
+        public ActionResult EditOrder(Order order)
+        {
+            if (order != null)
+            {
+                Repository rep = new Repository();
+                rep.CreateOrUpdateOrder(order);
+
+                return Redirect("/Home/Orders");
+            }
+
+            return View(order);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteOrder(Guid? orderId)
+        {
+            if (orderId.HasValue)
+            {
+                Repository rep = new Repository();
+                rep.DeleteOrder(orderId.Value);
+            }
+
+            return Redirect("/Home/Orders");
         }
     }
 }

@@ -6,18 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Results;
-using System.Web.Script.Services;
 
 namespace FoodConstructor.Controllers
 {
     public class FoodConstructorController : ApiController
     {
-
         // OPTION http-verb handler
         public string OptionsFoodConstructor()
         {
@@ -28,7 +22,32 @@ namespace FoodConstructor.Controllers
         [Route(@"api/test")]
         public JsonStringResult Test()
         {
-            return new JsonStringResult("Test OK");
+            try
+            {
+                return new JsonStringResult("Test OK");
+            }
+            catch(Exception ex)
+            {
+                return new JsonStringResult($"Exception occured during test method calling: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route(@"api/ClearDB")]
+        public JsonStringResult ClearDB()
+        {
+            try
+            {
+                Repository rep = new Repository();
+                rep.DeleteAllCompanies();
+                rep.DeleteAllIssuePoints();
+                rep.DeleteAllOrders();
+                return new JsonStringResult("DB cleared");
+            }
+            catch(Exception ex)
+            {
+                return new JsonStringResult($"Exception occured during DB clearing: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -56,7 +75,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonStringResult(); 
+                return new JsonStringResult($"Exception occured during all elements call: {ex.Message}"); 
             }
         }
 
@@ -78,11 +97,12 @@ namespace FoodConstructor.Controllers
                     }
                 }
 
+                Debug.WriteLine($"Company with ID: {companyId} not found");
                 return new JsonStringResult();
             }
             catch (Exception ex)
             {
-                return new JsonStringResult();
+                return new JsonStringResult($"Exception occured during available components request: {ex.Message}");
             }
         }
 
@@ -104,7 +124,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonStringResult();
+                return new JsonStringResult($"Exception occured during company issue points requesting: {ex.Message}");
             }
         }
 
@@ -119,7 +139,7 @@ namespace FoodConstructor.Controllers
             }
             catch (Exception ex)
             {
-                return new JsonStringResult();
+                return new JsonStringResult($"Exception occured during companies request: {ex.Message}");
             }
         }
     }
