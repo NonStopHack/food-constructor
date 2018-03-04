@@ -1,4 +1,5 @@
 ﻿using FoodConstructor.Models;
+using FoodConstructor.Models.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -28,6 +29,17 @@ namespace FoodConstructor
                 }
                 
                 Companies.Add(company);
+            }
+
+            Repository rep = new Repository();
+            foreach(var company in Companies)
+            {
+                rep.CreateOrUpdateCompany(company);
+            }
+
+            foreach(var issPoint in IssuePoints)
+            {
+                rep.CreateOrUpdateIssuePoint(issPoint);
             }
         }
     }

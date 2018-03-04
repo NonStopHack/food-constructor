@@ -10,6 +10,7 @@ namespace FoodConstructor.Models
             _id = Guid.NewGuid();
             _companyId = companyId;
             _issuePointId = issuePointId;
+            _history = new List<KeyValuePair<OrderState, DateTime>>();
             _history.Add(new KeyValuePair<OrderState, DateTime>(OrderState.Waiting, DateTime.Now));
         }
 
@@ -22,34 +23,6 @@ namespace FoodConstructor.Models
             }
         }
 
-        private IList<IDish> _dishes;
-        public IList<IDish> Dishes
-        {
-            get
-            {
-                return _dishes;
-            }
-
-            set
-            {
-                _dishes = value;
-            }
-        }
-
-        private Guid _customerId;
-        public Guid CustomerId
-        {
-            get
-            {
-                return _customerId;
-            }
-
-            set
-            {
-                _customerId = value;
-            }
-        }
-        
         private Guid _companyId;
         public Guid CompanyId
         {
@@ -78,6 +51,34 @@ namespace FoodConstructor.Models
             }
         }
 
+        private Guid _customerId;
+        public Guid CustomerId
+        {
+            get
+            {
+                return _customerId;
+            }
+
+            set
+            {
+                _customerId = value;
+            }
+        }
+
+        private IList<IDish> _dishes;
+        public IList<IDish> Dishes
+        {
+            get
+            {
+                return _dishes;
+            }
+
+            set
+            {
+                _dishes = value;
+            }
+        }
+
         private OrderState _state;
         public OrderState State
         {
@@ -92,7 +93,7 @@ namespace FoodConstructor.Models
             }
         }
 
-        private IList<KeyValuePair<OrderState, DateTime>> _history;
+        private List<KeyValuePair<OrderState, DateTime>> _history;
         public IList<KeyValuePair<OrderState, DateTime>> History
         {
             get
@@ -105,7 +106,12 @@ namespace FoodConstructor.Models
         {
             get
             {
-                return new KeyValuePair<OrderState, DateTime>(OrderState.Waiting, DateTime.Now);
+                KeyValuePair<OrderState, DateTime> lastState = new KeyValuePair<OrderState, DateTime>(OrderState.None, DateTime.MinValue);
+                if (_history != null)
+                {
+                    lastState = _history[_history.Count];
+                }
+                return lastState;
             }
         }
     }

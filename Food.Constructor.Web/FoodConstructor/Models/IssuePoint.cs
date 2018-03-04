@@ -5,6 +5,14 @@ namespace FoodConstructor.Models
 {
     public class IssuePoint : IIssuePoint
     {
+        public IssuePoint()
+        {
+            _id = Guid.NewGuid();
+            _title = "Default title";
+            _address = "Default address";
+            _availableComponents = new List<IComponent>();
+        }
+
         public IssuePoint(string title, string address)
         {
             _id = Guid.NewGuid();
@@ -19,6 +27,11 @@ namespace FoodConstructor.Models
             get
             {
                 return _id;
+            }
+
+            set
+            {
+                _id = value;
             }
         }
 

@@ -192,9 +192,11 @@
     <Compile Include="Models\IOrder.cs" />
     <Compile Include="Models\IssuePoint.cs" />
     <Compile Include="Models\JsonStringResult.cs" />
+    <Compile Include="Models\NutritionalValue.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Component.cs" />
     <Compile Include="Models\Repository\IRepository.cs" />
+    <Compile Include="Models\Repository\MongoBDClient.cs" />
     <Compile Include="Models\Repository\Repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -233,6 +235,10 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Companies.cshtml" />
+    <Content Include="Views\Home\EditCompany.cshtml" />
+    <Content Include="Views\Home\IssuePoints.cshtml" />
+    <Content Include="Views\Home\EditIssuePoint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,6 +5,13 @@ namespace FoodConstructor.Models
 {
     public class Company : ICompany
     {
+        public Company()
+        {
+            _id = Guid.NewGuid();
+            _title = "Default title";
+            _issuePointsIds = new List<Guid>();
+        }
+
         public Company(string title)
         {
             _id = Guid.NewGuid();
@@ -19,6 +26,10 @@ namespace FoodConstructor.Models
             {
                 return _id;
             }
+            set
+            {
+                _id = value;
+            }
         }
 
         private string _title;
@@ -27,6 +38,10 @@ namespace FoodConstructor.Models
             get
             {
                 return _title;
+            }
+            set
+            {
+                _title = value;
             }
         }
 
